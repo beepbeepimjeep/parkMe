@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <title> INFO30005 :: JavaScript - Workshop #3 </title>
+    <script src="ws3js_working.js"></script>
+    <link rel="stylesheet" href="modal.css">
+</head>
+<body>
+<center>
+    <div id="wordTiles">
+        <!--
+        <div class=”char">w</div>
+        <div class=”char">o</div>
+        <div class=”char">r</div>
+        <div class=”char">d</div>
+        -->
+    </div>
+    <br></br>
+    <form>
+        <label>Enter your guess</label>
+        <input type="text" name="guess" id="guess">
+        <button>Submit</button>
+    </form>
+    <br></br>
+    <br></br>
+    Game board
+    <hr width=20%>
+    <table id="gameboard" border=1>
+        <tr>
+            <th>Incorrect Guesses</th>
+            <td id="incorrect_guesses"></td>
+        </tr>
+        <tr>
+            <th>Remaining Guesses</th>
+            <td id="remaining_guesses"></td>
+        </tr>
+    </table>
+    <hr width=20%>
+    <br></br>
+    <button id="myBtn">Set word to be guessed</button>
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form>
+                <label>set word</label>
+                <input type="text" id="setWord">
+                <button type="button" onclick="init()">Submit</button>
+            </form>
+        </div>
+
+    </div>
+    <button type="button" onclick="showWord()">show</button>
+</center>
+</body>
+</html>
