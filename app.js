@@ -3,13 +3,13 @@ const express = require("express");
 const app = express();
 
 app.get("/",(req,res)=>{
-
+    res.send("<H1>park me</H1>");
 });
 
 const parkingRouter = require("./routes/parkingRouter");
 
 app.use("/parking",parkingRouter);
 
-app.listen(3001,()=>{
-   console.log("app on port 3001");
+app.listen(3000,()=>{
+   console.log("app on port 3000");
 });
