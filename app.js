@@ -1,11 +1,12 @@
 const express = require("express");
 
 const app = express();
+const path = require("path");
 
 var PORT = process.env.PORT || 3000;
 
 app.get("/",(req,res)=>{
-    res.send("<H1>park me</H1>");
+    res.sendFile(path.join(__dirname+'/html/parkMeMain.html'));
 });
 
 const parkingRouter = require("./routes/parkingRouter");
