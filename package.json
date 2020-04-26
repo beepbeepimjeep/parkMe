@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/beepbeepimjeep/parkMe#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "exphbs": "^1.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.3"
   }
 }

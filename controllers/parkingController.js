@@ -1,5 +1,5 @@
 var parkings = require("../models/parking");
-
+var comment = require("../models/comment");
 const getAllParking = (req, res) => {
     res.send(parkings);
 };
