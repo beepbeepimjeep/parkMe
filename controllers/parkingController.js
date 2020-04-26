@@ -1,7 +1,16 @@
-var parkings = require("../models/parking");
-var comment = require("../models/comment");
-const getAllParking = (req, res) => {
-    res.send(parkings);
+const mongoose = require("mongoose");
+
+// import author model
+const parking = mongoose.model("parking");
+const getAllParking = async (req, res) => {
+
+    try {
+        const all_parking = await parking.find();
+        return res.send(all_parking);
+    } catch (err) {
+        res.status(400);
+        return res.send("Database query failed");
+    }
 };
 
 const getParkingById = (req, res) => {

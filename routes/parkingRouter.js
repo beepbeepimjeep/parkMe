@@ -4,13 +4,9 @@ const parkingRouter = express.Router();
 
 const parkingController = require("../controllers/parkingController");
 
-parkingRouter.get("/", (req, res) =>{
-    parkingController.getAllParking()
-        .then(
-            res.render('parkMeMain',{})
-        )
-}
-    );
+parkingRouter.get("/",
+    parkingController.getAllParking);
+
 
 parkingRouter.get("/:id",parkingController.getParkingById);
 

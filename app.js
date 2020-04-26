@@ -3,14 +3,25 @@ const path = require("path");
 const exphbs = require("express-handlebars");
 const app = express();
 
+
 //header for all pages
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+//connect to db
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
+// Connection URL
+const url = 'mongodb://localhost:27017';
+
+// Database Name
+
+
 var PORT = process.env.PORT || 3000;
 
 app.get("/",(req,res)=>{
-    res.sendFile(path.join(__dirname+'/html/parkMeMain.html'));
+    res.send('index')
 });
 
 const parkingRouter = require("./routes/parkingRouter");

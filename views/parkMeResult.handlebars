@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+    <link rel="stylesheet" type = "text/css" href = "../searchResult.css">
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Bay Id</th>
+            <th>Address</th>
+            <th>Distance</th>
+            <th>Link</th>
+        </tr>
+        {{#each park}}
+
+            <tr>
+                <td>{{bayid}}</td>
+                <td>{{status}}</td>
+                <td>{{lat}}</td>
+                <td>{{lon}}</td>
+            </tr>
+
+        {{else}}
+            <p>no available parking</p>
+        {{/each}}
+
+
+    </table>
+</body>
+</html>

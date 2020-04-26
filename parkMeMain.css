@@ -1,3 +1,23 @@
+.topnav{
+    height: 50px;
+    background-color: aqua;
+}
+
+.topnav a{
+    text-align: center;
+    font-size: 17px;
+    color: black;
+}
+
+.topnav a:hover{
+    background-color: #dddddd;
+}
+
+.leftys{
+    padding-right: 10px;
+    float: right;
+}
+
 .search-bar {
     height: 100px;
     width: 600px;
@@ -9,7 +29,7 @@
     padding: 6px;
     margin-top: 8px;
     font-size: 17px;
-    border: beige;
+    border-style: double;
 }
 
 .button{
