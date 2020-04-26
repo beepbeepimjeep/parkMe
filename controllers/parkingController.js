@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // import author model
-const parking = mongoose.model("parking");
+const parking = mongoose.model("parkingResult");
 const getAllParking = async (req, res) => {
 
     try {

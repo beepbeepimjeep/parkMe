@@ -1,11 +1,12 @@
 const express = require("express");
-
 const parkingRouter = express.Router();
 
 const parkingController = require("../controllers/parkingController");
 
-parkingRouter.get("/",
-    parkingController.getAllParking);
+parkingRouter.get("/",(req, res)=>{
+    res.render('parkMeResult',parkingController.getAllParking)
+});
+
 
 
 parkingRouter.get("/:id",parkingController.getParkingById);

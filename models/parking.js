@@ -5,5 +5,5 @@ const parkingSchema = new mongoose.Schema({
     lat: String,
     lon: String
 });
-const parking = mongoose.model("parking", parkingSchema, "parking");
+const parking = mongoose.model("parkingResult", parkingSchema, "parkingResult");
 module.exports = parking;
