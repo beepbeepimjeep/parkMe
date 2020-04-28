@@ -18,8 +18,10 @@ const url = 'mongodb://localhost:27017';
 var PORT = process.env.PORT || 3000;
 
 app.get("/",(req,res)=>{
-    res.send('index')
+    res.render('parkMe');
 });
+
+app.get('/parking/search',)
 
 const parkingRouter = require("./routes/parkingRouter");
 

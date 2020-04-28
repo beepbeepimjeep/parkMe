@@ -1,19 +1,5 @@
 const mongoose = require("mongoose");
 
-const test = [
-    {
-        bayid:"0001",
-        status:"Present",
-        lat:"-37.81081371806565",
-        lon:"144.95302970099428"
-    },
-    {
-        bayid:"0002",
-        status:"Present",
-        lat:"-37.807200995578604",
-        lon:"144.95365553170808"
-    }
-]
 const parking = mongoose.model("parkingResult");
 
 const getAllParking = async (req, res) => {
@@ -43,16 +29,31 @@ const getAllParking = async (req, res) => {
     }
     };
 
-/*const getParkingById = (req, res) => {
-    const parking = parkings.find(parking => parking.bayid === req.params.id);
-    if(parking){
-        res.send(parking);
-    }else{
-        res.send("No parking bay by that ID");
-    }
-};*/
+const getParkingById = (req,res)=>{
+    var query = {bayid:req.query.searchItem};
+    parking.find(query).then((documents) => {
+        // create context Object with 'usersDocuments' key
+        const context = {
+            allParkingBays: documents.map((document) => {
+                return {
+                    bayid: document.bayid,
+                    status: document.status,
+                    lat: document.lat,
+                    lon: document.lon
+                };
+            })
+        };
+        console.log(context);
+        res.render('parkMeResult', {
+            parking: context.allParkingBays
+        });
+    });
+
+}
+
+
 
 module.exports = {
-    getAllParking
-    //getParkingById
+    getAllParking,
+    getParkingById
 };
