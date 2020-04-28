@@ -7,16 +7,13 @@ require('./models');
 //header for all pages
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
-
+app.use(express.static(__dirname + '/public'));
 //connect to db
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
 // Connection URL
 const url = 'mongodb://localhost:27017';
-
-// Database Name
-
 
 var PORT = process.env.PORT || 3000;
 
@@ -29,5 +26,5 @@ const parkingRouter = require("./routes/parkingRouter");
 app.use("/parking",parkingRouter);
 
 app.listen(PORT,()=>{
-   console.log('app on port '+PORT);
+    console.log('app on port '+PORT);
 });

@@ -1,15 +1,17 @@
 const express = require("express");
 const parkingRouter = express.Router();
 
-const parkingController = require("../controllers/parkingController");
-
-parkingRouter.get("/",(req, res)=>{
-    res.render('parkMeResult',parkingController.getAllParking)
-});
+const parkingController = require("../controllers/parkingController.js");
+parkingRouter.get("/", parkingController.getAllParking);
 
 
+    //console.log(parking);;
 
-parkingRouter.get("/:id",parkingController.getParkingById);
+
+
+
+
+//parkingRouter.get("/:id",parkingController.getParkingById);
 
 parkingRouter.get("/:addcommment",(req,res)=>{
     /*const data = {

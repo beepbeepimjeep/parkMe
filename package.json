@@ -17,11 +17,13 @@
   },
   "homepage": "https://github.com/beepbeepimjeep/parkMe#readme",
   "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.3",
     "dotenv": "^8.2.0",
     "exphbs": "^1.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^4.0.3",
     "mongodb": "^3.5.6",
-    "mongoose": "^5.9.10"
+    "mongoose": "^5.9.10",
+    "handlebars": "latest"
   }
 }
