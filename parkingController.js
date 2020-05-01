@@ -1,39 +1,84 @@
-var parkings = require("../models/parking");
+const mongoose = require("mongoose");
 
-const getAllParking = (req, res) => {
-    res.send(parkings);
-};
+const parking = mongoose.model("parkingResult");
 
-const getParkingById = (req, res) => {
-    const parking = parkings.find(parking => parking.bayid === req.params.id);
-    if(parking){
-        res.send(parking);
-    }else{
-        res.send("No parking bay by that ID");
+const getAllParking = async (req, res) => {
+    try {
+
+        await parking.find({}).then((documents) => {
+    // create context Object with 'usersDocuments' key
+        const context = {
+            allParkingBays: documents.map((document) => {
+                return {
+                    bayid: document.bayid,
+                    status: document.status,
+                    lat: document.lat,
+                    lon: document.lon
+                };
+            })
+        };
+
+        res.render('parkMeResult', {
+            parking: context.allParkingBays
+        });
+    });
+    } catch (err) {
+        console.log(err);
+        res.status(400);
+        return res.send('Database query failed');
     }
-};
+    };
 
-const getNearbyParkingBay = (req, res) => {
+const getParkingById = (req,res)=>{
+    var query = {bayid:req.query.searchItem};
+    parking.find(query).then((documents) => {
+        // create context Object with 'usersDocuments' key
+        const context = {
+            allParkingBays: documents.map((document) => {
+                return {
+                    bayid: document.bayid,
+                    status: document.status,
+                    lat: document.lat,
+                    lon: document.lon
+                };
+            })
+        };
+        console.log(context);
+        res.render('parkMeResult', {
+            parking: context.allParkingBays
+        });
+    });
+}
+
+const getNearbyParking = (req,res)=>{
     const lat = req.params.lat;
     const lon = req.params.lon;
-    var distInfo = [];
-    var i;
-    for (i=0; i<parkings.length; i++){
-	var distSquare = (lat-parkings[i].lat)**2+(lon-parkings[i].lon)**2;
-	var info = {index: i, dist: distSquare};
-	distInfo.push(info);
-    }
-    distInfo.sort(function(a,b){return a.dist-b.dist});
-    var result = [];
-    for (i=0; i<parkings.length; i++){
-	result.push(parkings[distInfo[i].index]);
-    }
-    
-    res.send(result);
+    parking.find({}).then((documents) => {
+        // create context Object with 'usersDocuments' key
+        const context = {
+            allParkingBays: documents.map((document) => {
+                return {
+                    bayid: document.bayid,
+                    status: document.status,
+                    lat: document.lat,
+                    lon: document.lon
+                };
+            })
+        };
+        data = context.allParkingBays;
+        data.sort(function(a,b){
+            var distSquareA = (lat-a.lat)**2+(lon-a.lon)**2;
+            var distSquareB = (lat-b.lat)**2+(lon-b.lon)**2;
+            return distSquareA-distSquareB;
+        });
+        res.render('parkMeResult', {
+            parking: data
+        });
+    });
 };
 
 module.exports = {
     getAllParking,
     getParkingById,
-    getNearbyParkingBay
+    getNearbyParking
 };
