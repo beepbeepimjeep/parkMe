@@ -10,4 +10,8 @@ parkingRouter.get("/", parkingController.getAllParking);
 parkingRouter.get("/search",
     parkingController.getParkingById);
 
+parkingRouter.get("/add", parkingController.submitComment
+);
+
 module.exports = parkingRouter;
+
