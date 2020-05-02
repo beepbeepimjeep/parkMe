@@ -1,5 +1,5 @@
 ParkMe Info30005
-A node js project aiming to help people find on street car parks
+A node js project aiming to help people find on street car parks, the data we are using is from https://data.melbourne.vic.gov.au/
 
 Authors
 Guo Yuhong
