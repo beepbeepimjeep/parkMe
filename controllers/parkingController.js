@@ -18,7 +18,6 @@ const getAllParking = async (req, res) => {
                 };
             })
         };
-
         res.render('parkMeResult', {
             parking: context.allParkingBays
         });
@@ -68,7 +67,9 @@ const submitComment = (req,res)=>{
         parking.close
         }
     )
-    res.redirect("/parking")
+
+    //reload current page
+    res.redirect("back")
 };
 
 
