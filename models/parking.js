@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 const parkingSchema = new mongoose.Schema({
     bayid: Number,
