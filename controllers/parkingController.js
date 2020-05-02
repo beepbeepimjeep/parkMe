@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const parking = mongoose.model("parkingResult");
 
+//
 const getAllParking = async (req, res) => {
     try {
-
         await parking.find({}).then((documents) => {
     // create context Object with 'usersDocuments' key
         const context = {
@@ -13,7 +13,8 @@ const getAllParking = async (req, res) => {
                     bayid: document.bayid,
                     status: document.status,
                     lat: document.lat,
-                    lon: document.lon
+                    lon: document.lon,
+                    comment: document.comment
                 };
             })
         };
@@ -27,9 +28,10 @@ const getAllParking = async (req, res) => {
         res.status(400);
         return res.send('Database query failed');
     }
-    };
+};
 
 const getParkingById = (req,res)=>{
+    //search query
     var query = {bayid:req.query.searchItem};
     parking.find(query).then((documents) => {
         // create context Object with 'usersDocuments' key
@@ -39,7 +41,8 @@ const getParkingById = (req,res)=>{
                     bayid: document.bayid,
                     status: document.status,
                     lat: document.lat,
-                    lon: document.lon
+                    lon: document.lon,
+                    comment: document.comment
                 };
             })
         };
@@ -51,9 +54,26 @@ const getParkingById = (req,res)=>{
 
 }
 
+const submitComment = (req,res)=>{
+
+    //select all where bayid is req.query.bayid
+    var getBayId = {bayid:req.query.bayid};
+
+    //update comment query
+    var updateComment = {$set:{comment:req.query.commentStr}};
+
+    parking.updateOne(getBayId,updateComment,function (err, res) {
+        if (err) throw err;
+        console.log("1 document updated");
+        parking.close
+        }
+    )
+    res.redirect("/parking")
+};
 
 
 module.exports = {
     getAllParking,
-    getParkingById
+    getParkingById,
+    submitComment
 };
