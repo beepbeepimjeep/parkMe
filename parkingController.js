@@ -51,8 +51,10 @@ const getParkingById = (req,res)=>{
 }
 
 const getNearbyParking = (req,res)=>{
-    const lat = req.params.lat;
-    const lon = req.params.lon;
+    const lat = req.query.searchItem.split(",")[0];
+    const lon = req.query.searchItem.split(",")[1];
+    //const lat = req.params.lat;
+    //const lon = req.params.lon;
     parking.find({}).then((documents) => {
         // create context Object with 'usersDocuments' key
         const context = {
