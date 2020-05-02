@@ -71,7 +71,7 @@
             <span class="close">&times;</span>
             <form name="comment" action="/parking/add" method="get">
 
-                <input id='inputId' type="hidden" name="bayid" placeholder="enter the bayid..."></br>
+                <input id='inputId' type="hidden" name="bayid" ></br>
                 <input type="text" name="commentStr" placeholder="enter your comment...">
                 <button type="submit" class="button">Submit</button>
             </form>>
@@ -80,9 +80,9 @@
     </div>
 </body>
 <script>
-    var id;
+
     function sendBayId(value) {
-        id= value.getAttribute('bayid');
+        var id= value.getAttribute('bayid');
         modal.style.display = "block";
         document.getElementById('inputId').value = id;
     }

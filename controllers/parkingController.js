@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const parking = mongoose.model("parkingResult");
 
+//
 const getAllParking = async (req, res) => {
     try {
         await parking.find({}).then((documents) => {
@@ -30,6 +31,7 @@ const getAllParking = async (req, res) => {
 };
 
 const getParkingById = (req,res)=>{
+    //search query
     var query = {bayid:req.query.searchItem};
     parking.find(query).then((documents) => {
         // create context Object with 'usersDocuments' key
@@ -53,12 +55,18 @@ const getParkingById = (req,res)=>{
 }
 
 const submitComment = (req,res)=>{
-    console.log(req.query.commentStr);
-    parking.updateOne({bayid:req.query.bayid},{$set:{comment:req.query.commentStr}},function (err, res) {
+
+    //select all where bayid is req.query.bayid
+    var getBayId = {bayid:req.query.bayid};
+
+    //update comment query
+    var updateComment = {$set:{comment:req.query.commentStr}};
+
+    parking.updateOne(getBayId,updateComment,function (err, res) {
         if (err) throw err;
         console.log("1 document updated");
         parking.close
-    }
+        }
     )
     res.redirect("/parking")
 };
