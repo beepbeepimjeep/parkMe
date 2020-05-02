@@ -22,7 +22,7 @@ Function 1:
     2. Enter address in the form of lat,lon
     3. Possible input {-37.81081371806564,
         144.95302970099426}
-    4. Result will return from closest to furthest 
+    4. Return top 3 result order by closest to furthest 
 
 Function 2:
   Search detail of a car park by entering the bayid
