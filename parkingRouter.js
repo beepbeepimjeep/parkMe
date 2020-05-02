@@ -6,8 +6,10 @@ const parkingController = require("../controllers/parkingController");
 
 parkingRouter.get("/",parkingController.getAllParking);
 
-parkingRouter.get("/:id",parkingController.getParkingById);
+//parkingRouter.get("/:id",parkingController.getParkingById);
 
-parkingRouter.get("/:lat/:lon",parkingController.getNearbyParkingBay);
+parkingRouter.get("/searchId",parkingController.getParkingById);
+
+parkingRouter.get("/searchAddress",parkingController.getNearbyParking);
 
 module.exports = parkingRouter;
