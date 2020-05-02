@@ -1,0 +1,42 @@
+.topnav{
+    height: 50px;
+    background-color: aqua;
+}
+
+.topnav a{
+    text-align: center;
+    font-size: 17px;
+    color: black;
+}
+
+.topnav a:hover{
+    background-color: #dddddd;
+}
+
+.leftys{
+    padding-right: 10px;
+    float: right;
+}
+
+.search-bar {
+    height: 100px;
+    width: 600px;
+}
+
+.input{
+    height: 40px;
+    width: 200px;
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border-style: double;
+}
+
+.button{
+    height: 40px;
+    padding: 15px 15px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    cursor: pointer;
+}
