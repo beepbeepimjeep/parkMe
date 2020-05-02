@@ -15,7 +15,7 @@ const assert = require('assert');
 // Connection URL
 const url = 'mongodb://localhost:27017';
 
-//setting for heroku port 
+//setting for heroku port
 var PORT = process.env.PORT || 3000;
 
 app.get("/",(req,res)=>{
