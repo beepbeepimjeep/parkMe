@@ -13,5 +13,5 @@ parkingRouter.get("/search",
 parkingRouter.get("/add", parkingController.submitComment
 );
 
-module.exports = parkingRouter;
+module.exports = parkingRouter
 

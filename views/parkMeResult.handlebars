@@ -55,7 +55,7 @@
                 <td>{{lon}}</td>
                 <td><a href="www.google.com/search?q={{bayid}}">www.google.com/search?q={{bayid}}</a></td>
                 <td>{{comment}}</td>
-
+                <td><button class="modalBut" bayid="{{bayid}}" type="button" onclick="sendBayId(this)" >add comment</button></td>
             </tr>
 
         {{else}}
@@ -64,13 +64,14 @@
 
 
     </table>
-    <button id="modalBut">add comment</button>
+
     <div id="myModal" class="modal">
 
         <div class="modal-content">
             <span class="close">&times;</span>
             <form name="comment" action="/parking/add" method="get">
-                <input type="text" name="bayid" placeholder="enter the bayid..."></br>
+
+                <input id='inputId' type="hidden" name="bayid" placeholder="enter the bayid..."></br>
                 <input type="text" name="commentStr" placeholder="enter your comment...">
                 <button type="submit" class="button">Submit</button>
             </form>>
@@ -79,19 +80,25 @@
     </div>
 </body>
 <script>
+    var id;
+    function sendBayId(value) {
+        id= value.getAttribute('bayid');
+        modal.style.display = "block";
+        document.getElementById('inputId').value = id;
+    }
+
     var modal = document.getElementById("myModal");
 
-
     // Get the button that opens the modal
-    var btn = document.getElementById("modalBut");
+
 
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
 
     // When the user clicks on the button, open the modal
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
+    /*btn.onclick = function() {
+
+    }*/
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
@@ -104,5 +111,13 @@
             modal.style.display = "none";
         }
     }
+
+   /* function  myFunction(value) {
+        console.log('108')
+        var bayid = value[0].getAttribute('bayid');
+        document.getElementById('inputId').innerHTML = bayid;
+        console.log(bayid);
+        console.log('112')
+    }*/
 </script>
 </html>

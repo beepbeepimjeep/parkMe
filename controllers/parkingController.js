@@ -57,7 +57,7 @@ const submitComment = (req,res)=>{
     parking.updateOne({bayid:req.query.bayid},{$set:{comment:req.query.commentStr}},function (err, res) {
         if (err) throw err;
         console.log("1 document updated");
-        parking.close;
+        parking.close
     }
     )
     res.redirect("/parking")
