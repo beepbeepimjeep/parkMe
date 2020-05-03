@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const parking = mongoose.model("parkingResult");
 
+//
 const getAllParking = async (req, res) => {
     try {
         await parking.find({}).then((documents) => {
@@ -71,44 +72,9 @@ const submitComment = (req,res)=>{
     res.redirect("back")
 };
 
-const getNearbyParking = (req,res)=>{
-    //assume that user input is in form: "lat,lon"
-    const lat = req.query.searchItem.split(",")[0];
-    const lon = req.query.searchItem.split(",")[1];
-
-    parking.find({}).then((documents) => {
-        // create context Object with 'usersDocuments' key
-        const context = {
-            allParkingBays: documents.map((document) => {
-                return {
-                    bayid: document.bayid,
-                    status: document.status,
-                    lat: document.lat,
-                    lon: document.lon,
-                    comment: document.comment
-                };
-            })
-        };
-        let data = context.allParkingBays;
-        //Each pair of (lat,lon) is regarded as a point
-        //distSquare is squared Euclidean distance of the point user input and each point in database
-        //sort data in ascending order according to distSquare
-        data.sort(function (a, b) {
-            var distSquareA = (lat - a.lat) ** 2 + (lon - a.lon) ** 2;
-            var distSquareB = (lat - b.lat) ** 2 + (lon - b.lon) ** 2;
-            return distSquareA - distSquareB;
-        });
-        
-        res.render('parkMeResult', {
-            parking: data
-        });
-
-    });
-};
 
 module.exports = {
     getAllParking,
     getParkingById,
-    submitComment,
-    getNearbyParking
+    submitComment
 };
