@@ -3,22 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Park Me!</title>
-    <link rel="stylesheet" type="text/css" href="../parkMeMain.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 </head>
+<style>
+    .carousel-inner img {
+        width: 100%;
+    }
+
+</style>
 <body>
-<div>
-    <h1>Park Me!</h1>
-    <a href="/parking">get all parking</a>
-</div>
-<div class="search-bar">
-    <form name="id" action="" method="get">
-        <input type="radio" id="address" name="searchType" value="address" class="input">
-        <label for="address">address</label>
-        <input type="radio" id="bayid" name="searchType" value="bayid" class="input">
-        <label for="bayid">bay id</label><br>
-        <input type="text" placeholder="Enter address/bay id" name="searchItem" class="input">
-        <button type="submit" class="button" onclick="takeAction()">Submit</button>
+<div class="container-fluid">
+    <form name="id" method="get">
+        <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="address" name="searchType">address
+            </label>
+        </div>
+        <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" value="bayid" name="searchType">bayid
+            </label>
+        </div>
+        <div class="input-group col-4" style="padding: 0px 0px">
+            <input type="text" placeholder="Enter address/bay id" name="searchItem" class="form-control">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-success" onclick="takeAction()">Submit</button>
+            </div>
+        </div>
     </form>
+
 </div>
 <script>
     //seperate route for different choice of searchType
