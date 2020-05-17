@@ -1,0 +1,22 @@
+#header {
+    background-color: antiquewhite;
+    color: darkgoldenrod;
+    text-align: center;
+    padding: 5px;
+}
+
+#nav {
+    width: 20%;
+    float: left;
+}
+
+#main {
+    width: 80%;
+    float: right;
+}
+
+#footer {
+    clear: both;
+    text-align: center;
+    background-color: cornsilk;
+}
