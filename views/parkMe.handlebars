@@ -16,7 +16,7 @@
     <form name="id" method="get">
         <div class="form-check-inline">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" value="address" name="searchType" id="addrInLat">address
+                <input type="radio" class="form-check-input" value="address" name="searchType">address
             </label>
         </div>
         <div class="form-check-inline">
@@ -30,6 +30,8 @@
                 <button type="submit" class="btn btn-success" onclick="takeAction()">Submit</button>
             </div>
         </div>
+        <input type="text" name="addrInLat" id="addrInLat" style="visibility: hidden">
+        <input type="text" name="addrInLng" id="addrInLng" style="visibility: hidden">
     </form>
 
 </div>
@@ -41,14 +43,16 @@
         var choice = document.forms["id"]["searchType"].value;
         if (choice === "address"){
             var address= document.getElementById('addr').value;
-            address.replace(/ /g,'+');
             const apiKey = "GCKALRJbp5GlFkSPRqfudXtTAHblG98b";
             var jsonurl = "http://www.mapquestapi.com/geocoding/v1/address?key="+apiKey+"&location="+address;
             console.log(jsonurl);
             var json_obj = JSON.parse(Get(jsonurl));
-            var text = json_obj.results[0].locations[0].displayLatLng;
-            console.log(text)
-            document.getElementById("addrInLat").value = text;
+            var lat = json_obj.results[0].locations[0].displayLatLng.lat;
+            var lng = json_obj.results[0].locations[0].displayLatLng.lng;
+            console.log("result:"+lat);
+            console.log("result:"+lng);
+            document.getElementById("addrInLat").value = lat;
+            document.getElementById("addrInLng").value = lng;
             document.id.action = "parking/searchAddress";
         }
         else{

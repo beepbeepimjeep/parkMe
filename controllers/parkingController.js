@@ -72,11 +72,10 @@ const submitComment = (req,res)=>{
 };
 const getNearbyParking = (req,res)=>{
     //assume that user input is in form: "lat,lon"
-    var lat = req.query.searchItem.split(",")[0];
-    var lon = req.query.searchItem.split(",")[1];
-    lat = lat.substr(5,lat.length);
-    lon = lon.substr(5,lon.length);
-    console.log(lat+lon);
+    var lat = req.query.addrInLat;
+    console.log(lat);
+    var lon = req.query.addrInLng;
+    console.log(lon);
     parking.find({}).then((documents) => {
         // create context Object with 'usersDocuments' key
         const context = {
