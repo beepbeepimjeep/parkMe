@@ -72,6 +72,7 @@ const submitComment = (req,res)=>{
 };
 
 const getNearbyParking = (req,res)=>{
+    const apiKey = "GCKALRJbp5GlFkSPRqfudXtTAHblG98b";
     //assume that user input is in form: "lat,lon"
     const lat = req.query.searchItem.split(",")[0];
     const lon = req.query.searchItem.split(",")[1];
@@ -105,6 +106,7 @@ const getNearbyParking = (req,res)=>{
 
     });
 };
+
 
 module.exports = {
     getAllParking,

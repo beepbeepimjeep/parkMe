@@ -23,9 +23,10 @@ app.get("/",(req,res)=>{
 });
 
 const parkingRouter = require("./routes/parkingRouter");
+const userRouter = require("./routes/userRouter");
 
 app.use("/parking",parkingRouter);
-
+app.use("/user",userRouter);
 app.listen(PORT,()=>{
     console.log('app on port '+PORT);
 });
