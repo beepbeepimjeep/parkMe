@@ -70,13 +70,13 @@ const submitComment = (req,res)=>{
     //reload current page
     res.redirect("back")
 };
-
 const getNearbyParking = (req,res)=>{
-    const apiKey = "GCKALRJbp5GlFkSPRqfudXtTAHblG98b";
     //assume that user input is in form: "lat,lon"
-    const lat = req.query.searchItem.split(",")[0];
-    const lon = req.query.searchItem.split(",")[1];
-
+    var lat = req.query.searchItem.split(",")[0];
+    var lon = req.query.searchItem.split(",")[1];
+    lat = lat.substr(5,lat.length);
+    lon = lon.substr(5,lon.length);
+    console.log(lat+lon);
     parking.find({}).then((documents) => {
         // create context Object with 'usersDocuments' key
         const context = {
