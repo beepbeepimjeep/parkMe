@@ -46,9 +46,22 @@
             const apiKey = "GCKALRJbp5GlFkSPRqfudXtTAHblG98b";
             var jsonurl = "http://www.mapquestapi.com/geocoding/v1/address?key="+apiKey+"&location="+address;
             console.log(jsonurl);
-            var json_obj = JSON.parse(Get(jsonurl));
-            var lat = json_obj.results[0].locations[0].displayLatLng.lat;
-            var lng = json_obj.results[0].locations[0].displayLatLng.lng;
+            var json_result;
+            var lat;
+            var lng;
+            let request = new Request(jsonurl);
+            fetch(request)
+                .then(function (res)
+                    {return res.json()}
+                )
+                .then(function(data){
+                    console.log(data)
+                    lat = data.results[0].locations[0].displayLatLng.lat;
+                    lng = data.results[0].locations[0].displayLatLng.lng;
+                })
+
+            //var json_obj = JSON.parse(Get(jsonurl));
+
             document.getElementById("addrInLat").value = lat;
             document.getElementById("addrInLng").value = lng;
             document.id.action = "parking/searchAddress";
