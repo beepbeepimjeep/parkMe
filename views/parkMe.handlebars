@@ -37,8 +37,6 @@
 </div>
 <script src="/jquery/dist/jquery.js"></script>
 <script>
-    //seperate route for different choice of searchType
-
     function takeAction(){
         event.preventDefault()
         var choice = document.forms["id"]["searchType"].value;
@@ -47,7 +45,6 @@
             const apiKey = "GCKALRJbp5GlFkSPRqfudXtTAHblG98b";
             var jsonurl = "https://www.mapquestapi.com/geocoding/v1/address?key="+apiKey+"&location="+address;
             console.log(jsonurl);
-            var json_result;
             var lat;
             var lng;
             let request = new Request(jsonurl);
