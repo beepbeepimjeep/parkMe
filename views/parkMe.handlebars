@@ -38,28 +38,35 @@
 <script src="/jquery/dist/jquery.js"></script>
 <script>
     function takeAction(){
+        //prevent default behaviour, the form will only submit when document.id.submit()
         event.preventDefault()
+        //get the choice from the radio
         var choice = document.forms["id"]["searchType"].value;
         if (choice === "address"){
             var address= document.getElementById('addr').value;
+            //jsonurl is to get a pair of coordinates with geocoding api
             const apiKey = "GCKALRJbp5GlFkSPRqfudXtTAHblG98b";
             var jsonurl = "https://www.mapquestapi.com/geocoding/v1/address?key="+apiKey+"&location="+address;
             console.log(jsonurl);
-            var lat;
-            var lng;
             let request = new Request(jsonurl);
+            //use fetch to get the json data, and parse the result to two input on html,
+            // which will be submit to the controller
             fetch(request)
-                .then(function (res)
-                    {return res.json()}
+                .then(function (res) {
+                    if(!res.ok){
+                        throw Error(res.statusText);
+                    }
+                    return res.json()}
                 )
                 .then(function(json){
-                    lat = json.results[0].locations[0].displayLatLng.lat;
-                    lng = json.results[0].locations[0].displayLatLng.lng;
-                    document.getElementById("addrInLat").value = lat;
-                    document.getElementById("addrInLng").value = lng;
+                    //give input a lat and lng value
+                    document.getElementById("addrInLat").value = json.results[0].locations[0].displayLatLng.lat;
+                    document.getElementById("addrInLng").value = json.results[0].locations[0].displayLatLng.lng;
                     document.id.action = "parking/searchAddress";
                     document.id.submit();
-                })
+                }).catch(function (error) {
+                    console.log(error)
+            })
         }
         else{
             document.id.action = "parking/searchId";

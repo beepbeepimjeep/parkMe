@@ -49,7 +49,6 @@ const getParkingById = (req,res)=>{
             parking: context.allParkingBays
         });
     });
-
 }
 
 const submitComment = (req,res)=>{
@@ -70,8 +69,9 @@ const submitComment = (req,res)=>{
     //reload current page
     res.redirect("back")
 };
+
 const getNearbyParking = (req,res)=>{
-    //assume that user input is in form: "lat,lon"
+    //get the lat and lon from the form
     var lat = req.query.addrInLat;
     console.log(lat);
     var lon = req.query.addrInLng;
@@ -106,7 +106,11 @@ const getNearbyParking = (req,res)=>{
     });
 };
 
-
+function reverseGeo(url){
+    var address;
+    
+    return address;
+}
 module.exports = {
     getAllParking,
     getParkingById,
