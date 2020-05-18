@@ -40,6 +40,7 @@
     //seperate route for different choice of searchType
 
     function takeAction(){
+        event.preventDefault()
         var choice = document.forms["id"]["searchType"].value;
         if (choice === "address"){
             var address= document.getElementById('addr').value;
@@ -54,27 +55,19 @@
                 .then(function (res)
                     {return res.json()}
                 )
-                .then(function(data){
-                    console.log(data)
-                    lat = data.results[0].locations[0].displayLatLng.lat;
-                    lng = data.results[0].locations[0].displayLatLng.lng;
+                .then(function(json){
+                    lat = json.results[0].locations[0].displayLatLng.lat;
+                    lng = json.results[0].locations[0].displayLatLng.lng;
+                    document.getElementById("addrInLat").value = lat;
+                    document.getElementById("addrInLng").value = lng;
+                    document.id.action = "parking/searchAddress";
+                    document.id.submit();
                 })
-
-            //var json_obj = JSON.parse(Get(jsonurl));
-
-            document.getElementById("addrInLat").value = lat;
-            document.getElementById("addrInLng").value = lng;
-            document.id.action = "parking/searchAddress";
         }
         else{
             document.id.action = "parking/searchId";
+            document.id.submit();
         }
-    }
-    function Get(yourUrl){
-        var Httpreq = new XMLHttpRequest(); // a new request
-        Httpreq.open("GET",yourUrl,false);
-        Httpreq.send(null);
-        return Httpreq.responseText;
     }
 </script>
 </body>
