@@ -2,22 +2,42 @@ const mongoose = require("mongoose");
 const Request = require("request");
 const fetch = require('node-fetch');
 const parking = mongoose.model("parkingResult");
+function getAdd(address) {
+    return address;
+}
 const update = (req,res) => {
+    const apiKey = "GCKALRJbp5GlFkSPRqfudXtTAHblG98b";
     const melbDb = "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json";
-    console.log(melbDb)
-    let request = new Request(melbDb);
+    const reverseGeo = "https://www.mapquestapi.com/geocoding/v1/reverse?key=GCKALRJbp5GlFkSPRqfudXtTAHblG98b";
     fetch(melbDb)
         .then(function (res) {
-                return res.json();
+                return res.json({limit:'500kb'})
             }
         )
         .then(function (json) {
-            console.log(json)
+            parking.collection.deleteMany({});
+            console.log(json.length);
+            for(var i=0; i<json.length; i++){
+                var singleResult = json[i];
+
+                //addressStr = json.results[0].locations[0].street;
+                //console.log(addressStr)
+                //console.log(addressStr)
+                var firstInsert = {bayid: singleResult.bay_id, status: singleResult.status, lat: singleResult.location.latitude, lon: singleResult.location.longitude, address: '',comment: "no comment"}
+                var updateBayid = {$set: {bayid: singleResult.bay_id}};
+                var updateStatus = {$set: {status: singleResult.status}};
+                var updateLat = {$set: {lat: singleResult.location.latitude}};
+                var updateLon = {$set: {lon: singleResult.location.longitude}};
+                parking.insertMany(firstInsert, function (err, res) {
+                    if(err) throw err;
+                    parking.close
+                })
+            }
         })
         .catch(function (error) {
             console.log(error)
     })
-    res.send("update")
+    res.redirect("back");
 }
 const getAllParking = async (req, res) => {
 
@@ -30,8 +50,7 @@ const getAllParking = async (req, res) => {
                 return {
                     bayid: document.bayid,
                     status: document.status,
-                    lat: document.lat,
-                    lon: document.lon,
+                    address: document.address,
                     comment: document.comment
                 };
             })
@@ -52,13 +71,22 @@ const getParkingById = (req,res)=>{
     var query = {bayid:req.query.searchItem};
     parking.find(query).then((documents) => {
         // create context Object with 'usersDocuments' key
+
         const context = {
             allParkingBays: documents.map((document) => {
+                var revGeoUrl = "https://www.mapquestapi.com/geocoding/v1/reverse?key=GCKALRJbp5GlFkSPRqfudXtTAHblG98b&location="+document.lat+","+document.lon+"&includeRoadMetadata=true&includeNearestIntersection=true";
+                var add;
+                fetch(revGeoUrl)
+                    .then(function (res) {
+                        return res.json();
+                    }).then(function (json) {
+                        add = json.results[0].locations[0].street;
+                        console.log(add);
+                })
                 return {
                     bayid: document.bayid,
                     status: document.status,
-                    lat: document.lat,
-                    lon: document.lon,
+                    address: add,
                     comment: document.comment
                 };
             })
