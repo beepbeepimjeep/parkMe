@@ -1,9 +1,28 @@
 const mongoose = require("mongoose");
-
+const Request = require("request");
+const fetch = require('node-fetch');
 const parking = mongoose.model("parkingResult");
-
+const update = (req,res) => {
+    const melbDb = "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json";
+    console.log(melbDb)
+    let request = new Request(melbDb);
+    fetch(melbDb)
+        .then(function (res) {
+                return res.json();
+            }
+        )
+        .then(function (json) {
+            console.log(json)
+        })
+        .catch(function (error) {
+            console.log(error)
+    })
+    res.send("update")
+}
 const getAllParking = async (req, res) => {
+
     try {
+
         await parking.find({}).then((documents) => {
     // create context Object with 'usersDocuments' key
         const context = {
@@ -115,5 +134,6 @@ module.exports = {
     getAllParking,
     getParkingById,
     submitComment,
-    getNearbyParking
+    getNearbyParking,
+    update
 };
