@@ -2,16 +2,13 @@ const mongoose = require("mongoose");
 const Request = require("request");
 const fetch = require('node-fetch');
 const parking = mongoose.model("parkingResult");
-function getAdd(address) {
-    return address;
-}
 const update = (req,res) => {
     const apiKey = "GCKALRJbp5GlFkSPRqfudXtTAHblG98b";
-    const melbDb = "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json";
+    const melbDb = "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json?$limit=5000";
     const reverseGeo = "https://www.mapquestapi.com/geocoding/v1/reverse?key=GCKALRJbp5GlFkSPRqfudXtTAHblG98b";
     fetch(melbDb)
         .then(function (res) {
-                return res.json({limit:'500kb'})
+                return res.json()
             }
         )
         .then(function (json) {
@@ -50,7 +47,8 @@ const getAllParking = async (req, res) => {
                 return {
                     bayid: document.bayid,
                     status: document.status,
-                    address: document.address,
+                    lat: document.lat,
+                    lon: document.lon,
                     comment: document.comment
                 };
             })
@@ -66,36 +64,57 @@ const getAllParking = async (req, res) => {
     }
 };
 
-const getParkingById = (req,res)=>{
+const getParkingById = async (req,res)=>{
     //search query
-    var query = {bayid:req.query.searchItem};
-    parking.find(query).then((documents) => {
-        // create context Object with 'usersDocuments' key
 
-        const context = {
-            allParkingBays: documents.map((document) => {
-                var revGeoUrl = "https://www.mapquestapi.com/geocoding/v1/reverse?key=GCKALRJbp5GlFkSPRqfudXtTAHblG98b&location="+document.lat+","+document.lon+"&includeRoadMetadata=true&includeNearestIntersection=true";
-                var add;
-                fetch(revGeoUrl)
-                    .then(function (res) {
-                        return res.json();
-                    }).then(function (json) {
-                        add = json.results[0].locations[0].street;
-                        console.log(add);
+        var query = {bayid:req.query.searchItem};
+        /*parking.find(query,function (err,res) {
+            if(err) throw err
+            var revGeoUrl = "https://www.mapquestapi.com/geocoding/v1/reverse?key=r6mEXWAdpohbgJyspF2GP1GOPoRiMYEc&location="+
+                res[0].lat+","+res[0].lon+"&includeRoadMetadata=true&includeNearestIntersection=true";
+            fetch(revGeoUrl)
+                .then(function (res) {
+                    return res.json();
+                }).then(function (json) {
+                parking.updateOne({bayid:req.query.searchItem},{$set:{address:json.results[0].locations[0].street}},function (err,res) {
+                    if(err) throw err;
+                    console.log("address update to: "+json.results[0].locations[0].street)
+                    parking.close;
                 })
-                return {
-                    bayid: document.bayid,
-                    status: document.status,
-                    address: add,
-                    comment: document.comment
-                };
             })
-        };
-        console.log(context);
-        res.render('parkMeResult', {
-            parking: context.allParkingBays
+            const context = {
+                return:{
+                    bayid: res[0].bayid,
+                    status: res[0].status,
+                    address: parking.find(query)[0].locations[0].street,
+                    comment: res[0].comment
+                }
+            }
+            console.log(context);
+            res.render('parkMeResult', {
+                parking: context})
+        })*/
+        parking.find(query).then((documents) => {
+            // create context Object with 'usersDocuments' key
+
+            const context = {
+                allParkingBays: documents.map((document) => {
+
+                    return {
+                        bayid: document.bayid,
+                        status: document.status,
+                        lat: document.lat,
+                        lon: document.lon,
+                        comment: document.comment
+                    };
+
+                })
+            };
+            console.log(context);
+            res.render('parkMeResult', {
+                parking: context.allParkingBays
+            });
         });
-    });
 }
 
 const submitComment = (req,res)=>{
@@ -145,7 +164,7 @@ const getNearbyParking = (req,res)=>{
             var distSquareB = (lat - b.lat) ** 2 + (lon - b.lon) ** 2;
             return distSquareA - distSquareB;
         });
-        
+        data.aggregate({$limit:5});
         res.render('parkMeResult', {
             parking: data
         });
