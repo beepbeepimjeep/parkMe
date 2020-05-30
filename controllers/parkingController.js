@@ -64,23 +64,43 @@ const getAllParking = async (req, res) => {
     }
 };
 
-const getParkingById = async (req,res)=>{
+const getParkingById = async (req,res,callback)=>{
     //search query
-
         var query = {bayid:req.query.searchItem};
+        async function getAddress(query, callback){
+            fetch(query)
+                .then(function (res) {
+                    return res.json();
+                }).then(function (json) {
+                parking.updateOne({bayid:req.query.searchItem},{$set:{address:json.results[0].locations[0].street}},function (err,res) {
+                    if(err) throw err;
+                    address = json.results[0].locations[0].street;
+                    callback(address);
+                    console.log("fetch address is :"+address)
+                    parking.close;
+                    return address;
+                })
+            })
+        }
+        function addressResult(address){
+            console.log("callback:"+address)
+            return address;
+        }
         /*parking.find(query,function (err,res) {
             if(err) throw err
             var revGeoUrl = "https://www.mapquestapi.com/geocoding/v1/reverse?key=r6mEXWAdpohbgJyspF2GP1GOPoRiMYEc&location="+
                 res[0].lat+","+res[0].lon+"&includeRoadMetadata=true&includeNearestIntersection=true";
+            var address='';
             fetch(revGeoUrl)
                 .then(function (res) {
                     return res.json();
                 }).then(function (json) {
                 parking.updateOne({bayid:req.query.searchItem},{$set:{address:json.results[0].locations[0].street}},function (err,res) {
                     if(err) throw err;
+                    address = json.results[0].locations[0].street;
                     console.log("address update to: "+json.results[0].locations[0].street)
                     parking.close;
-                })
+                }).callback(address)
             })
             const context = {
                 return:{
@@ -94,11 +114,27 @@ const getParkingById = async (req,res)=>{
             res.render('parkMeResult', {
                 parking: context})
         })*/
-        parking.find(query).then((documents) => {
+        await parking.find(query).then((documents) => {
             // create context Object with 'usersDocuments' key
-
+            var revGeoUrl = "https://www.mapquestapi.com/geocoding/v1/reverse?key=r6mEXWAdpohbgJyspF2GP1GOPoRiMYEc&location="+
+                documents.valueOf()[0].lat+","+documents.valueOf()[0].lon+"&includeRoadMetadata=true&includeNearestIntersection=true";
+            getAddress(revGeoUrl,addressResult);
             const context = {
                 allParkingBays: documents.map((document) => {
+
+                    /*fetch(revGeoUrl,callback)
+                        .then(function (res) {
+                            return res.json();
+                        }).then(function (json) {
+                        parking.updateOne({bayid:req.query.searchItem},{$set:{address:json.results[0].locations[0].street}},function (err,res) {
+                            if(err) throw err;
+                            address = json.results[0].locations[0].street;
+                            callback(address);
+                            console.log("fetch address is :"+address)
+                            parking.close;
+                        })
+                    })*/
+                    console.log("address is:"+document.address);
 
                     return {
                         bayid: document.bayid,
@@ -142,6 +178,7 @@ const getNearbyParking = (req,res)=>{
     console.log(lat);
     var lon = req.query.addrInLng;
     console.log(lon);
+
     parking.find({}).then((documents) => {
         // create context Object with 'usersDocuments' key
         const context = {
@@ -164,7 +201,7 @@ const getNearbyParking = (req,res)=>{
             var distSquareB = (lat - b.lat) ** 2 + (lon - b.lon) ** 2;
             return distSquareA - distSquareB;
         });
-        data.aggregate({$limit:5});
+
         res.render('parkMeResult', {
             parking: data
         });
