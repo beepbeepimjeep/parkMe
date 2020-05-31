@@ -21,3 +21,4 @@ db.once("open", async () => {
         db.port);
 });
 require('./parking');
+require('./user');
