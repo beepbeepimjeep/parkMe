@@ -4,27 +4,27 @@
     <meta charset="UTF-8">
     <title>Park Me!</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/forms.css">
 </head>
 <body>
-<div class="sform">
-<div class="row">
-    <div class="form-group col-xl-4">
-        <label for="usr">Username:</label>
-        <input type="text" class="form-control" id="usr">
-    </div>
-</div>
-<div class="row">
-    <div class="form-group col-xl-4">
-        <label for="pwd">Password:</label>
-        <div class="input-group">
-            <input type="password" class="form-control" id="pwd">
-            <div class="input-group-append">
-                <button type="submit" class="btn btn-success input-group-append" onclick="">login</button>
+    {{alert}}
+    <form class="sform" action="/user/login" method="POST">
+        <div class="form-row"> 
+            <div class="col-md-6 offset-md-3">
+                <label for="">Email:</label>
+                <input type="text" class="form-control" name="email">
             </div>
         </div>
-    </div>
-</div>
-</div>
+        <div class="form-row"> 
+            <div class="col-md-6 offset-md-3">
+                <label for="">Password:</label>
+                <input type="text" class="form-control" name="password">
+            </div>
+        </div>
+        <div class="form-row">
+            <button type="submit" class="btn btn-success btn-block loginBut">Login</button>
+        </div>
+    </form>
 
 </body>
 </html>

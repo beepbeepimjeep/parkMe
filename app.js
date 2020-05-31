@@ -17,8 +17,12 @@ const url = 'mongodb://localhost:27017';
 //setting for heroku port
 var PORT = process.env.PORT || 3000;
 
+const userController = require("./controllers/userController.js");
+
 app.get("/",(req,res)=>{
-    res.render('parkMe');
+    res.render('parkMe',{
+        user: userController.getuserName
+    });
 });
 
 const parkingRouter = require("./routes/parkingRouter");

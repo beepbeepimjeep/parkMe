@@ -18,4 +18,14 @@ userRouter.post("/signup", function(req, res){
     res.redirect('/');
 })
 
+userRouter.post("/login", function(req, res){
+    let email = req.body.email;
+    let password = req.body.password;
+    userController.signUser(email, password);
+    res.redirect('/');
+    
+    
+})
+
+
 module.exports = userRouter;
