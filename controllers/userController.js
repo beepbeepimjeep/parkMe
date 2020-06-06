@@ -1,28 +1,54 @@
 const mongoose = require("mongoose");
 const user = mongoose.model("user");
 var userName = "guest";
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-function addUser(firstname, lastname, email, password){
-    user.collection.insertOne({
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        password: password
+function assignID(){
+    var id;
+    user.collection.findOne({}, {sort:{$natural:-1}}, function(err, user){
+        id = user.userID;
+        id++;
     })
+    return id;
+
 }
 
-function signUser(email, password){
-    user.findOne({email:email, password:password}, function(err,user){
-        //console.log(user);
-        if(!user){
-            return false;
+function addUser(firstname, lastname, email, password, callback){   
+    let id = callback();
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+        user.collection.insertOne({
+            userID: id,
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            password: hash
+        })
+    });
+    
+    userName = lastname;
+
+}  
+
+const signUser = (req, res)=>{
+    user.findOne({email: req.body.email}, function(err, user){
+        if(err){
+            console.log(err);
+        }else if(user){
+            bcrypt.compare(req.body.password, user.password, function(err, result) {
+                if(result){
+                    userName = user.lastname;
+                    res.redirect('/');
+                }else{
+                    res.render("check", {check: "Invalide password"});
+                }
+            });
         }
         else{
-            userName = email;
-            return true;
+            res.render("check", {check: "Invalid email"});
         }
     })
-    
+
 }
 
 
@@ -35,19 +61,28 @@ const login = (req, res)=>{
 
 const signup = (req, res)=>{
     res.render("signup", {
-        user: userName
+        user: userName,
     });
 }
 
+
+
+
 function getuserName(){
     return userName;
+}
+
+function getAuth(){
+    return auth;
 }
 
 module.exports = {
     login,
     signup,
     addUser,
+    assignID,
     signUser,
     getuserName,
+    getAuth
 
 }
