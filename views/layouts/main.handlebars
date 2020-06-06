@@ -3,14 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Park Me!</title>
-    <link rel="stylesheet" type="text/css" href="../parkMeMain.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <style>
+        .JumboHeaderImg{
+            //background-image: url("/img/background3.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+    </style>
 </head>
 <body>
-<div class="topnav">
-    <a href="/">Park Me!</a>
-    <a href="/html/login.html" class="leftys">Log in</a>
-    <a href="/html/signup.html" class="leftys">Sign up</a>
+<div class="container-fluid">
+    <div class="jumbotron text-center JumboHeaderImg">
+        <h1>Park Me!</h1>
+        <p>Intelligent & convenient parking</p>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a href="/" class="nav-link active">Park Me!</a></li>
+        <li class="nav-item"><a href="/parking" class="nav-link">get all parking</a></li>
+        <li class="nav-item"><a href="/parking/updateAddress" class="nav-link">Update</a></li>
+        <li class="nav-item"><a href="/user/login" class="nav-link">Log in</a></li>
+        <li class="nav-item"><a href="/user/signup" class="nav-link">Sign up</a></li>
+    </ul>
+    {{{body}}}
+    <div class="row" style="position: relative; bottom: 0px; width: 100%">
+        <div class="col"></div>
+        <div class="col">
+            <p>Team Park Me Info30005</p>
+            <p>Wen Li Leong Yang CHEN Yuhong GUO Ziheng TANG</p>
+        </div>
+        <div class="col">
+            <p>Team Logo</p>
+        </div>
+    </div>
 </div>
-{{{body}}}
 </body>
 </html>

@@ -3,25 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Result</title>
-    <link rel="stylesheet" type = "text/css" href = "/searchResult.css">
+    <link rel="stylesheet" type = "text/css" href = "/css/bootstrap.css">
+    <style>
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-content{
+            background-color: #fefefe;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
 </head>
 <body>
-    <table>
+    <table class="table table-striped">
         <tr>
             <th>Bay Id</th>
             <th>Status</th>
-            <th>lat</th>
-            <th>lon</th>
+            <th>Lat</th>
+            <th>Lon</th>
             <th>link</th>
+            <th>comment</th>
+            <th>add</th>
         </tr>
         {{#each parking}}
 
             <tr>
                 <td>{{bayid}}</td>
                 <td>{{status}}</td>
-                <td>{{lat}}</td>
+		<td>{{lat}}</td>
                 <td>{{lon}}</td>
-                <td><a href="www.google.com/search?q={{bayid}}">www.google.com/search?q={{bayid}}</a></td>
+		<td><button id="btn-map" class="button" lat="{{lat}}" lon="{{lon}}" "type="submit" onclick="goToMap(this)">Show on map</button></td>
+                <td>{{comment}}</td>
+                <td><button class="modalBut" bayid="{{bayid}}" type="button" onclick="sendBayId(this)" >add comment</button></td>
             </tr>
 
         {{else}}
@@ -30,5 +67,66 @@
 
 
     </table>
+
+    <div id="myModal" class="modal">
+
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form name="comment" action="/parking/add" method="get">
+
+                <input id='inputId' type="hidden" name="bayid" ></br>
+                <input type="text" name="commentStr" placeholder="enter your comment...">
+                <button type="submit" class="button">Submit</button>
+            </form>
+        </div>
+
+    </div>
 </body>
+<script>
+
+    function goToMap(value) {
+	var lat = value.getAttribute('lat');
+	var lon = value.getAttribute('lon');
+        document.getElementById("btn-map").lat=lat;
+	document.getElementById("btn-map").lon=lon;
+	window.open("/map?lat="+lat+"&lon="+lon);
+    }
+ 
+
+    //get the bayid linked to the comment button, then set value to input
+    function sendBayId(value) {
+        //get bayid
+        var id= value.getAttribute('bayid');
+        //show modal box
+        modal.style.display = "block";
+        //parse bayid to input where id is inputid
+        document.getElementById('inputId').value = id;
+    }
+
+    //code from line 91 to 106 from https://www.w3schools.com/howto/howto_css_modals.asp
+    var modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+   /* function  myFunction(value) {
+        console.log('108')
+        var bayid = value[0].getAttribute('bayid');
+        document.getElementById('inputId').innerHTML = bayid;
+        console.log(bayid);
+        console.log('112')
+    }*/
+</script>
 </html>
