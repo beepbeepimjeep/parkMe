@@ -7,7 +7,7 @@ const parkinglotSchema = new mongoose.Schema({
     lat: Number,
     lon: Number,
     link: String,
-    comment: String
+    comment: []
 });
 const parkinglot = mongoose.model("parkinglotResult", parkinglotSchema, "parkinglotResult");
 module.exports = parkinglot;
