@@ -20,6 +20,11 @@
                 <input type="radio" class="form-check-input" value="bayid" name="searchType">bayid
             </label>
         </div>
+        <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" value="parkinglot" name="searchType">ParkingLot
+            </label>
+        </div>
         <div class="input-group col-4" style="padding: 10px 0px">
             <input type="text" placeholder="Enter address/bay id" name="searchItem" id="addr" class="form-control">
             <div class="input-group-append">
@@ -31,10 +36,11 @@
     </form>
     <div id="map" style="width: 100%; height: 700px"></div>
 </div>
+
 <script src="/jquery/dist/jquery.js"></script>
 <script type="text/javascript">
     window.onload = function() {
-        L.mapquest.key = 'GCKALRJbp5GlFkSPRqfudXtTAHblG98b';
+        L.mapquest.key = 'r6mEXWAdpohbgJyspF2GP1GOPoRiMYEc';
 
         var map = L.mapquest.map('map', {
             center: [-37.7983, 144.9610],
@@ -50,12 +56,12 @@
         event.preventDefault()
         //get the choice from the radio
         var choice = document.forms["id"]["searchType"].value;
-        if (choice === "address"){
+        if (choice === "address"||choice === "parkinglot"){
             var address= document.getElementById('addr').value;
             //jsonurl is to get a pair of coordinates with geocoding api
             const apiKey = "r6mEXWAdpohbgJyspF2GP1GOPoRiMYEc";
+            const apiSeckey = "GCKALRJbp5GlFkSPRqfudXtTAHblG98b"
             var jsonurl = "https://www.mapquestapi.com/geocoding/v1/address?key="+apiKey+"&location="+address;
-            console.log(jsonurl);
             let request = new Request(jsonurl);
             //use fetch to get the json data, and parse the result to two input on html,
             // which will be submit to the controller
@@ -70,8 +76,13 @@
                     //give input a lat and lng value
                     document.getElementById("addrInLat").value = json.results[0].locations[0].displayLatLng.lat;
                     document.getElementById("addrInLng").value = json.results[0].locations[0].displayLatLng.lng;
-                    document.id.action = "parking/searchAddress";
-                    document.id.submit();
+                    if(choice === "address"){
+                        document.id.action = "parking/searchAddress";
+                        document.id.submit();
+                    }else{
+                        document.id.action = "parking/parkinglot";
+                        document.id.submit();
+                    }
                 }).catch(function (error) {
                     console.log(error)
             })

@@ -28,7 +28,7 @@
             font-weight: bold;
         }
 
-        .close:hover
+        .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
@@ -54,9 +54,9 @@
             <tr>
                 <td>{{bayid}}</td>
                 <td>{{status}}</td>
-		<td>{{lat}}</td>
+		            <td>{{lat}}</td>
                 <td>{{lon}}</td>
-		<td><button id="btn-map" class="button" lat="{{lat}}" lon="{{lon}}" "type="submit" onclick="goToMap(this)">Show on map</button></td>
+		            <td><button id="btn-map" class="button" lat="{{lat}}" lon="{{lon}}" "type="submit" onclick="goToMap(this)">Show on map</button></td>
                 <td>{{comment}}</td>
                 <td><button class="modalBut" bayid="{{bayid}}" type="button" onclick="sendBayId(this)" >add comment</button></td>
             </tr>
@@ -92,7 +92,6 @@
 	window.open("/map?lat="+lat+"&lon="+lon);
     }
  
-
     //get the bayid linked to the comment button, then set value to input
     function sendBayId(value) {
         //get bayid

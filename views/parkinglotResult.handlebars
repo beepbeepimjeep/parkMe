@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+    <link rel="stylesheet" type = "text/css" href = "/css/bootstrap.css">
+</head>
+<body>
+<table class="table table-striped">
+    <tr>
+        <th>Parking Lot Name</th>
+        <th>Address</th>
+        <th>Contact Number</th>
+    </tr>
+    {{#each plot}}
+        <tr>
+            <td><button type="submit" id="parkId" name="{{id}}" onclick="action()" >{{lotname}}</button></td>
+            <td>{{address}}</td>
+            <td>{{contactnumber}}</td>
+        </tr>
+    {{else}}
+        <p>no available parking</p>
+    {{/each}}
+</table>
+<form name="id">
+    <input type="text" id="parkIdRes" name="parkIdRes" style="visibility: hidden" >
+</form>
+
+<script type="text/javascript">
+    function  action() {
+        event.preventDefault()
+        var parklotid = document.getElementById("parkId").attributes[2].value;
+        document.forms["id"]["parkIdRes"].value = parklotid;
+        document.getElementById("parkIdRes").value = parklotid;
+        document.id.action="singleParkingLot";
+        document.id.submit();
+    }
+</script>
+</body>
+</html>

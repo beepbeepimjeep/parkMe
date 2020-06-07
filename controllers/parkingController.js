@@ -2,6 +2,56 @@ const mongoose = require("mongoose");
 const Request = require("request");
 const fetch = require('node-fetch');
 const parking = mongoose.model("parkingResult");
+const parkinglot = mongoose.model("parkinglot")
+
+const singleParkingLot = async (req,res)=>{
+    var query = {parkinglot_id:req.query.parkIdRes};
+    await parkinglot.find(query).then((document)=>{
+        const context = {
+            parkinglotRes: document.map((document)=>{
+                return {
+                    lotname: document.lotname,
+                    address: document.address,
+                    contactnumber: document.contactnumber,
+                    lat: document.lat,
+                    lon: document.lon,
+                    link: document.link
+                };
+            })
+        }
+        res.render('singleParkingLot', {
+            parking: context.parkinglotRes
+        });
+    })
+
+}
+const nearByParkingLot=(req,res)=>{
+    var lat = req.query.addrInLat;
+    console.log(lat);
+    var lon = req.query.addrInLng;
+    console.log(lon);
+    parkinglot.find({}).then((document)=>{
+        const context = {
+            parkinglotResult: document.map((document)=>{
+                return{
+                    lotname: document.lotname,
+                    address: document.address,
+                    contactnumber: document.contactnumber,
+                    lat: document.lat,
+                    lon: document.lon,
+                    id: document.parkinglot_id
+                };
+            })
+        }
+        let data = context.parkinglotResult;
+        data.sort(function (a, b) {
+            var distSquareA = (lat - a.lat) ** 2 + (lon - a.lon) ** 2;
+            var distSquareB = (lat - b.lat) ** 2 + (lon - b.lon) ** 2;
+            return distSquareA - distSquareB;
+        });
+        res.render('parkinglotResult',{plot:data})
+    })
+}
 const update = (req,res) => {
     const apiKey = "GCKALRJbp5GlFkSPRqfudXtTAHblG98b";
     const melbDb = "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json?$limit=5000";
@@ -16,7 +66,6 @@ const update = (req,res) => {
             console.log(json.length);
             for(var i=0; i<json.length; i++){
                 var singleResult = json[i];
-
                 //addressStr = json.results[0].locations[0].street;
                 //console.log(addressStr)
                 //console.log(addressStr)
@@ -36,10 +85,10 @@ const update = (req,res) => {
     })
     res.redirect("back");
 }
+
+
 const getAllParking = async (req, res) => {
-
     try {
-
         await parking.find({}).then((documents) => {
     // create context Object with 'usersDocuments' key
         const context = {
@@ -63,7 +112,6 @@ const getAllParking = async (req, res) => {
         return res.send('Database query failed');
     }
 };
-
 const getParkingById = async (req,res,callback)=>{
     //search query
         var query = {bayid:req.query.searchItem};
@@ -152,7 +200,6 @@ const getParkingById = async (req,res,callback)=>{
             });
         });
 }
-
 const submitComment = (req,res)=>{
 
     //select all where bayid is req.query.bayid
@@ -175,9 +222,7 @@ const submitComment = (req,res)=>{
 const getNearbyParking = (req,res)=>{
     //get the lat and lon from the form
     var lat = req.query.addrInLat;
-    console.log(lat);
     var lon = req.query.addrInLng;
-    console.log(lon);
 
     parking.find({}).then((documents) => {
         // create context Object with 'usersDocuments' key
@@ -209,15 +254,12 @@ const getNearbyParking = (req,res)=>{
     });
 };
 
-function reverseGeo(url){
-    var address;
-    
-    return address;
-}
 module.exports = {
     getAllParking,
     getParkingById,
     submitComment,
     getNearbyParking,
-    update
+    update,
+    nearByParkingLot,
+    singleParkingLot
 };
