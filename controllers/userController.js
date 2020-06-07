@@ -76,6 +76,10 @@ function getAuth(){
     return auth;
 }
 
+function setUserName(userName){
+    userName = userName;
+}
+
 module.exports = {
     login,
     signup,
@@ -83,6 +87,7 @@ module.exports = {
     assignID,
     signUser,
     getuserName,
+    setUserName,
     getAuth
 
 }

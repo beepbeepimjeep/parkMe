@@ -21,6 +21,7 @@ userRouter.post("/signup",[
 ],function (req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+        userController.setUserName("guest");
         res.redirect('back');
         return res.status(422).jsonp(errors.array());
       } else {
