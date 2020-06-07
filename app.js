@@ -26,9 +26,11 @@ app.get("/map",(req,res)=>{
 
 const parkingRouter = require("./routes/parkingRouter");
 const userRouter = require("./routes/userRouter");
+//const mapRouter = require("./routes/mapRouter");
 
 app.use("/parking",parkingRouter);
 app.use("/user",userRouter);
+//app.use("/map",mapRouter);
 app.listen(PORT,()=>{
     console.log('app on port '+PORT);
 });

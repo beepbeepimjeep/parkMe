@@ -11,6 +11,7 @@
 <div class="container-fluid" style="padding-top: 15px; padding-left: 0px">
 
     <div id="map" style="width: 100%; height: 700px"></div>
+
 </div>
 <script src="/jquery/dist/jquery.js"></script>
 <script type="text/javascript">
@@ -19,10 +20,11 @@
     var lon = window.opener.document.getElementById("btn-map").lon;
     lat = parseFloat(lat);
     lon = parseFloat(lon);
+    
     window.onload = function() {
         L.mapquest.key = 'GCKALRJbp5GlFkSPRqfudXtTAHblG98b';
 
-        var map = L.mapquest.map('map', {
+        let map = L.mapquest.map('map', {
             center: [lat,lon],
             layers: L.mapquest.tileLayer('map'),
             zoom: 15
@@ -30,6 +32,88 @@
 
         map.addControl(L.mapquest.control());
         L.marker([lat, lon]).addTo(map);
+        
+	let directionsControl = L.mapquest.directionsControl({
+  	    //className: '',
+  	    //directions: {
+    	        //options: {
+            	    timeOverage: 25,
+            	    //doReverseGeocode: false,
+                //}
+	    //},
+  	    directionsLayer: {
+    	        startMarker: {
+      		    title: 'Drag to change location',
+      		    draggable: true,
+      		    icon: 'marker-start',
+      		    iconOptions: {
+        		size: 'sm'
+      		    }
+    	        },
+    	    	endMarker: {
+      		    draggable: true,
+      		    title: 'Drag to change location',
+      		    icon: 'marker-end',
+      		    iconOptions: {
+        	    	size: 'sm'
+      		    }
+    	        },
+    	        viaMarker: {
+      	            title: 'Drag to change route'
+    	    	},
+    	    	routeRibbon: {
+      	            showTraffic: true
+    	    	},
+    	    	alternateRouteRibbon: {
+      	            showTraffic: true
+    	    	},
+    	    	paddingTopLeft: [450, 20],
+    	    	paddingBottomRight: [180, 20],
+  	    },
+  	    startInput: {
+    		compactResults: true,
+    		disabled: false,
+    		location: {},
+    		placeholderText: 'Starting point or click on the map...',
+    		geolocation: {
+      		    enabled: true
+    		},
+    		clearTitle: 'Remove starting point'
+  	    },
+  	    endInput: {
+    		disabled: true,
+    		geolocation: {
+      		    enabled: true
+    		},
+  	    },
+  	    addDestinationButton: {
+    	    	enabled: false,
+  	    },
+  	    routeTypeButtons: {
+    		enabled: true,
+  	    },
+  	    reverseButton: {
+    		enabled: true,
+  	    },
+  	    optionsButton: {
+    		enabled: true,
+  	    },
+  	    routeSummary: {
+    		enabled: true,
+    		compactResults: false,
+  	    },
+  	    narrativeControl: {
+    		enabled: true,
+    		compactResults: false,
+    		interactive: true,
+  	    }
+        }).addTo(map);
+	directionsControl.setFirstDestination({
+  	    latLng: {
+    		lat: -37.750307,
+    		lng: 144.999472
+  	    }
+	});
     }
     
 </script>
