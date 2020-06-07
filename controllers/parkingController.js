@@ -66,7 +66,6 @@ const update = (req,res) => {
             console.log(json.length);
             for(var i=0; i<json.length; i++){
                 var singleResult = json[i];
-
                 //addressStr = json.results[0].locations[0].street;
                 //console.log(addressStr)
                 //console.log(addressStr)
@@ -86,6 +85,8 @@ const update = (req,res) => {
     })
     res.redirect("back");
 }
+
+
 const getAllParking = async (req, res) => {
     try {
         await parking.find({}).then((documents) => {
@@ -217,6 +218,7 @@ const submitComment = (req,res)=>{
     //reload current page
     res.redirect("back")
 };
+
 const getNearbyParking = (req,res)=>{
     //get the lat and lon from the form
     var lat = req.query.addrInLat;

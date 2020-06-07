@@ -18,6 +18,7 @@ parkingRouter.get("/add", parkingController.submitComment
 parkingRouter.get("/searchAddress",parkingController.getNearbyParking);
 parkingRouter.get("/updateAddress",parkingController.update);
 
+
 //nearby parking lot
 parkingRouter.get("/parkinglot",parkingController.nearByParkingLot);
 
