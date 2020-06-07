@@ -1,12 +1,23 @@
 const express = require("express");
 const path = require("path");
 const exphbs = require("express-handlebars");
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const app = express();
 require('./models');
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 app.use(express.static(__dirname + '/public'));
+app.use(cors());
+
+app.use(cookieParser());
+app.use(session({
+    secret: 'positronx',
+    saveUninitialized: false,
+    resave: false
+}))
 //connect to db
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
@@ -17,8 +28,12 @@ const url = 'mongodb://localhost:27017';
 //setting for heroku port
 var PORT = process.env.PORT || 3000;
 
+const userController = require("./controllers/userController.js");
+
 app.get("/",(req,res)=>{
-    res.render('parkMe');
+    res.render('parkMe',{
+        user: userController.getuserName
+    });
 });
 
 const parkingRouter = require("./routes/parkingRouter");
