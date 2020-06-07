@@ -7,7 +7,6 @@ require('./models');
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 app.use(express.static(__dirname + '/public'));
-
 //connect to db
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
@@ -23,9 +22,10 @@ app.get("/",(req,res)=>{
 });
 
 const parkingRouter = require("./routes/parkingRouter");
+const userRouter = require("./routes/userRouter");
 
 app.use("/parking",parkingRouter);
-
+app.use("/user",userRouter);
 app.listen(PORT,()=>{
     console.log('app on port '+PORT);
 });

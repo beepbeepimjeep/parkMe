@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+    <link rel="stylesheet" type = "text/css" href = "/css/bootstrap.css">
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+</head>
+<body>
+<table class="table table-striped">
+    <tr>
+        <th>Parking Lot Name</th>
+        <th>Address</th>
+        <th>Contact Number</th>
+        <th>Website Link</th>
+    </tr>
+    {{#each parking}}
+        <tr>
+            <td>{{lotname}}</td>
+            <td>{{address}}</td>
+            <td>{{contactnumber}}</td>
+            <td><a href="{{link}}">{{link}}</a></td>
+        </tr>
+        <td id="lat" style="visibility: hidden">{{lat}}</td><td id="lon" style="visibility: hidden">{{lon}}</td>
+    {{else}}
+        <p>no available parking</p>
+    {{/each}}
+</table>
+<div id="map" style="width: 100%; height: 700px; margin-top: -65px"></div>
+<script type="text/javascript">
+    window.onload = function() {
+        L.mapquest.key = 'r6mEXWAdpohbgJyspF2GP1GOPoRiMYEc';
+        var lat = document.getElementById("lat").innerHTML;
+        var lon = document.getElementById("lon").innerHTML;
+        console.log("lat : "+lat+" lon : "+lon)
+        var map = L.mapquest.map('map', {
+            center: [lat, lon],
+            layers: L.mapquest.tileLayer('map'),
+            zoom: 15
+        });
+
+        map.addControl(L.mapquest.control());
+        L.marker([lat, lon]).addTo(map)
+    }
+</script>
+</body>
+</html>

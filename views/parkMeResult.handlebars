@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Result</title>
-    <link rel="stylesheet" type = "text/css" href = "/searchResult.css">
+    <link rel="stylesheet" type = "text/css" href = "/css/bootstrap.css">
     <style>
         .modal {
             display: none; /* Hidden by default */
@@ -37,23 +37,23 @@
     </style>
 </head>
 <body>
-    <table>
+    <table class="table table-striped">
         <tr>
             <th>Bay Id</th>
             <th>Status</th>
-            <th>lat</th>
-            <th>lon</th>
+            <th>Lat</th>
+            <th>Lon</th>
             <th>link</th>
             <th>comment</th>
+            <th>add</th>
         </tr>
         {{#each parking}}
-
             <tr>
                 <td>{{bayid}}</td>
                 <td>{{status}}</td>
                 <td>{{lat}}</td>
                 <td>{{lon}}</td>
-                <td><a href="www.google.com/search?q={{bayid}}">www.google.com/search?q={{bayid}}</a></td>
+                <td><button bayid="{{bayid}}" type="submit">Show on map</button></td>
                 <td>{{comment}}</td>
                 <td><button class="modalBut" bayid="{{bayid}}" type="button" onclick="sendBayId(this)" >add comment</button></td>
             </tr>

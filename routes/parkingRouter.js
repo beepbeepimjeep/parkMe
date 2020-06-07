@@ -14,6 +14,15 @@ parkingRouter.get("/searchId",
 parkingRouter.get("/add", parkingController.submitComment
 );
 
+//search by address route
+parkingRouter.get("/searchAddress",parkingController.getNearbyParking);
+parkingRouter.get("/updateAddress",parkingController.update);
 
+
+//nearby parking lot
+parkingRouter.get("/parkinglot",parkingController.nearByParkingLot);
+
+//detail of a particular parking lot
+parkingRouter.get("/singleParkingLot",parkingController.singleParkingLot);
 module.exports = parkingRouter;
 
