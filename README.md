@@ -1,73 +1,44 @@
-# ParkMe
+ParkMe Info30005
+A node js project aiming to help people find on street car parks, the data we are using is from https://data.melbourne.vic.gov.au/
 
-This GitHub repository includes the final submission of INFO30005 Web Information project. We aim to design a node JS project to help people find available parking spaces in the central area of Melbourne. 
+Authors
+Guo Yuhong
+Wen Li Leong
+Yang Cheng
+Ziheng Tang
 
-Team Members are listed below (ordered by the alphabetical order):
-
-- Wen Li Leong
-- Yang Chen
-- Yuhong Guo
-- Ziheng Tang
-
-
-
-### Description of Core Functionalities
-
-- Authentication:
-
-    - Sign up:
-
-        Signup allows user to register for an account
-
-    - Log in:
-        Login allows user to login and the navigation bars will appear the user’s last name
-
-    - Log out:
-
-        Logout allows user to logout from their account
-
-- Parking bays:
-
-    - users can enter either current address or specific bayID to check the nearby parking bays
-    - achieved by first pulling a JSON file from the Melbourne Platform and parse it to the MongoDB system.
-    - for example, if the user chooses to search the nearby parking bays by typing the present address, our algorithm will geocode the input and sort it by distance.
-    - secondary page will display the results from nearest to furthest. Including the detailed information about BayId, Status, Latitude, Longitude, link to the navigation shown on the map and the section for the later comments
-
-- Parking lots:
-
-    - This option is for people who prefer parking lots, as parking lots may seem to be safer for long-term parking.
-    - firstly, add static information about parking lots in Melbourne CBD (sources from Google) and manually add them to MongoDB database.
-    - similarly, geocode user input address and sort all the parking lots by distance(from nearest to furthest).
-    - after that, a secondary page will pop out where contains a more informative table which includes the name of the parking lots, address and contact number.
-
-- Navigation:
-
+Installation
+  Install node js
+  
+  Terminal commands:
+    npm i express
+    npm i handlebars
     
+Function 1:
+  Search nearby carpark by entering a lat,lon 
+  route: /parking/searchAddress
+  Steps: 
+    1. Select address radio above the search bar
+    2. Enter address in the form of lat,lon
+    3. Possible input {-37.81081371806564,
+        144.95302970099426}
+    4. Return top 3 result order by closest to furthest 
 
+Function 2:
+  Search detail of a car park by entering the bayid
+  route: /parking/searchId
+  Steps:
+    1. Select bayId radio above the search bar
+    2. Enter the bayid you wish to search
+    3. Possible input : {1,2,3,4,5}
+    4. Result of that parking bay will return
+   
+Function 3:
+  Comment a particular parking bay
+  router: /parking/add
+  Steps:
+    1. Click Get_All_Parking link
+    2. Will return all parking data
+    3. Click the comment button behind any of the result, a modal will pop up
+    4. Enter your comment, the page will redirect back to getAllParking and your comment will display there
 
-
-### URLs to access the functionalities on the front-end
-
-- Home Page: http://parkme-info30005.herokuapp.com/
-
-- Log in: http://parkme-info30005.herokuapp.com/user/login
-
-- Sign up: http://parkme-info30005.herokuapp.com/user/signup
-
-- Parking bays: 
-
-    - search by present address (eg. 200 Victoria Street):
-        http://parkme-info30005.herokuapp.com/parking/searchAddress?searchType=address&searchItem=200+Victoria+Street&addrInLat=30.305947&addrInLng=-89.360063
-    - \- search by precise bayID (eg. 6520):
-        http://parkme-info30005.herokuapp.com/parking/searchId?searchType=bayid&searchItem=6520&addrInLat=&addrInLng=
-
-- Parking lots: 
-
-    - search by specific address (eg. 200 Victoria Street): 
-
-        http://parkme-info30005.herokuapp.com/parking/parkinglot?searchType=parkinglot&searchItem=200+Victoria+Street&addrInLat=45.636426&addrInLng=-64.051791
-
-- Sample details of login:
-
-    - email: john@mail.com
-    - password: 12345
