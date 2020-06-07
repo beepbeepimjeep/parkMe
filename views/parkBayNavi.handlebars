@@ -11,22 +11,57 @@
 <div class="container-fluid" style="padding-top: 15px; padding-left: 0px">
 
     <div id="map" style="width: 100%; height: 700px"></div>
+
 </div>
 <script src="/jquery/dist/jquery.js"></script>
 <script type="text/javascript">
+
+    var lat = window.opener.document.getElementById("btn-map").lat;
+    var lon = window.opener.document.getElementById("btn-map").lon;
+    lat = parseFloat(lat);
+    lon = parseFloat(lon);
+    
     window.onload = function() {
         L.mapquest.key = 'GCKALRJbp5GlFkSPRqfudXtTAHblG98b';
 
-        var map = L.mapquest.map('map', {
-            center: [-37.7983, 144.9610],
+        let map = L.mapquest.map('map', {
+            center: [lat,lon],
             layers: L.mapquest.tileLayer('map'),
             zoom: 15
         });
 
         map.addControl(L.mapquest.control());
-        L.marker([-37.7983, 144.9610]).addTo(map)
+        L.marker([lat, lon]).addTo(map);
+        
+	let directionsControl = L.mapquest.directionsControl({
+  	    startInput: {
+    		compactResults: true,
+    		disabled: false,
+    		location: {},
+    		placeholderText: 'Starting point or click on the map...',
+    		geolocation: {
+      		    enabled: true
+    		},
+    		clearTitle: 'Remove starting point'
+  	    },
+  	    endInput: {
+    		disabled: true,
+    		geolocation: {
+      		    enabled: true
+    		},
+  	    },
+  	    addDestinationButton: {
+    	    	enabled: false,
+  	    },
+        }).addTo(map);
+	directionsControl.setFirstDestination({
+  	    latLng: {
+    		lat: lat,
+    		lng: lon
+  	    }
+	});
     }
-
+    
 </script>
 </body>
 </html>

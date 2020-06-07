@@ -224,7 +224,6 @@ const getNearbyParking = (req,res)=>{
     var lat = req.query.addrInLat;
     var lon = req.query.addrInLng;
 
-
     parking.find({}).then((documents) => {
         // create context Object with 'usersDocuments' key
         const context = {

@@ -35,6 +35,8 @@
             cursor: pointer;
         }
     </style>
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
 </head>
 <body>
     <table class="table table-striped">
@@ -48,12 +50,13 @@
             <th>add</th>
         </tr>
         {{#each parking}}
+
             <tr>
                 <td>{{bayid}}</td>
                 <td>{{status}}</td>
-                <td>{{lat}}</td>
+		            <td>{{lat}}</td>
                 <td>{{lon}}</td>
-                <td><button bayid="{{bayid}}" type="submit">Show on map</button></td>
+		            <td><button id="btn-map" class="button" lat="{{lat}}" lon="{{lon}}" "type="submit" onclick="goToMap(this)">Show on map</button></td>
                 <td>{{comment}}</td>
                 <td><button class="modalBut" bayid="{{bayid}}" type="button" onclick="sendBayId(this)" >add comment</button></td>
             </tr>
@@ -74,13 +77,21 @@
                 <input id='inputId' type="hidden" name="bayid" ></br>
                 <input type="text" name="commentStr" placeholder="enter your comment...">
                 <button type="submit" class="button">Submit</button>
-            </form>>
+            </form>
         </div>
 
     </div>
 </body>
 <script>
 
+    function goToMap(value) {
+	var lat = value.getAttribute('lat');
+	var lon = value.getAttribute('lon');
+        document.getElementById("btn-map").lat=lat;
+	document.getElementById("btn-map").lon=lon;
+	window.open("/map?lat="+lat+"&lon="+lon);
+    }
+ 
     //get the bayid linked to the comment button, then set value to input
     function sendBayId(value) {
         //get bayid

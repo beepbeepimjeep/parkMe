@@ -28,6 +28,8 @@ const url = 'mongodb://localhost:27017';
 //setting for heroku port
 var PORT = process.env.PORT || 3000;
 
+app.get("/map",(req,res)=>{
+    res.render('parkBayNavi');
 const userController = require("./controllers/userController.js");
 
 app.get("/",(req,res)=>{
