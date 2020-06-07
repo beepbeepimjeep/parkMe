@@ -28,7 +28,7 @@
             font-weight: bold;
         }
 
-        .close:hover
+        .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
@@ -48,7 +48,6 @@
             <th>add</th>
         </tr>
         {{#each parking}}
-
             <tr>
                 <td>{{bayid}}</td>
                 <td>{{status}}</td>
@@ -75,7 +74,7 @@
                 <input id='inputId' type="hidden" name="bayid" ></br>
                 <input type="text" name="commentStr" placeholder="enter your comment...">
                 <button type="submit" class="button">Submit</button>
-            </form>
+            </form>>
         </div>
 
     </div>

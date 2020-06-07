@@ -20,5 +20,9 @@ db.once("open", async () => {
     console.log("Mongo connection started on " + db.host + ":" +
         db.port);
 });
-require('./parking');
+
 require('./user');
+
+require('./parkinglot')
+require('./parking');
+
