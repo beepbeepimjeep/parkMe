@@ -34,42 +34,6 @@
         L.marker([lat, lon]).addTo(map);
         
 	let directionsControl = L.mapquest.directionsControl({
-  	    //className: '',
-  	    //directions: {
-    	        //options: {
-            	    timeOverage: 25,
-            	    //doReverseGeocode: false,
-                //}
-	    //},
-  	    directionsLayer: {
-    	        startMarker: {
-      		    title: 'Drag to change location',
-      		    draggable: true,
-      		    icon: 'marker-start',
-      		    iconOptions: {
-        		size: 'sm'
-      		    }
-    	        },
-    	    	endMarker: {
-      		    draggable: true,
-      		    title: 'Drag to change location',
-      		    icon: 'marker-end',
-      		    iconOptions: {
-        	    	size: 'sm'
-      		    }
-    	        },
-    	        viaMarker: {
-      	            title: 'Drag to change route'
-    	    	},
-    	    	routeRibbon: {
-      	            showTraffic: true
-    	    	},
-    	    	alternateRouteRibbon: {
-      	            showTraffic: true
-    	    	},
-    	    	paddingTopLeft: [450, 20],
-    	    	paddingBottomRight: [180, 20],
-  	    },
   	    startInput: {
     		compactResults: true,
     		disabled: false,
@@ -89,24 +53,6 @@
   	    addDestinationButton: {
     	    	enabled: false,
   	    },
-  	    routeTypeButtons: {
-    		enabled: true,
-  	    },
-  	    reverseButton: {
-    		enabled: true,
-  	    },
-  	    optionsButton: {
-    		enabled: true,
-  	    },
-  	    routeSummary: {
-    		enabled: true,
-    		compactResults: false,
-  	    },
-  	    narrativeControl: {
-    		enabled: true,
-    		compactResults: false,
-    		interactive: true,
-  	    }
         }).addTo(map);
 	directionsControl.setFirstDestination({
   	    latLng: {
